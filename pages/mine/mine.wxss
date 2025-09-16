@@ -1,0 +1,132 @@
+/**mine.wxss**/
+.container {
+  padding: 20rpx;
+  background: #f8f8f8;
+}
+
+/* 用户信息区域 */
+.user-section {
+  margin-bottom: 30rpx;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+
+.user-desc {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.login-btn {
+  background: #007AFF;
+  color: #ffffff;
+  padding: 15rpx 30rpx;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+}
+
+/* 统计信息 */
+.stats-section {
+  margin-bottom: 30rpx;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30rpx;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #007AFF;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 功能菜单 */
+.menu-section {
+  margin-bottom: 30rpx;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.menu-icon {
+  font-size: 40rpx;
+  margin-right: 30rpx;
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 32rpx;
+  color: #333333;
+}
+
+.menu-arrow {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* 广告位 */
+.ad-container {
+  margin: 30rpx 0;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+/* 关于我们 */
+.about-section {
+  text-align: center;
+}
+
+.about-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+.about-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+}
+
+.version-info {
+  font-size: 24rpx;
+  color: #999999;
+}

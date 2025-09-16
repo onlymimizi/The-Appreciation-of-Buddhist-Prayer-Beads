@@ -1,0 +1,74 @@
+<!--mine.wxml-->
+<view class="container">
+  <!-- 用户信息 -->
+  <view class="user-section card">
+    <view class="user-info">
+      <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="user-details">
+        <view class="user-name">{{userInfo.nickName || '微信用户'}}</view>
+        <view class="user-desc">佛珠爱好者</view>
+      </view>
+      <view class="login-btn" wx:if="{{!hasUserInfo}}" bindtap="getUserInfo">
+        登录
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-section card">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-number">{{totalAnalysis}}</view>
+        <view class="stat-label">鉴赏次数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-number">{{favoriteCount}}</view>
+        <view class="stat-label">收藏</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-number">{{historyCount}}</view>
+        <view class="stat-label">浏览记录</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 */
+  <view class="menu-section">
+    <view class="menu-item card" bindtap="viewFavorites">
+      <view class="menu-icon">❤️</view>
+      <view class="menu-text">我的收藏</view>
+      <view class="menu-arrow">></view>
+    </view>
+    
+    <view class="menu-item card" bindtap="viewHistory">
+      <view class="menu-icon">📖</view>
+      <view class="menu-text">浏览记录</view>
+      <view class="menu-arrow">></view>
+    </view>
+    
+    <view class="menu-item card" bindtap="viewAnalysisHistory">
+      <view class="menu-icon">🔍</view>
+      <view class="menu-text">鉴赏记录</view>
+      <view class="menu-arrow">></view>
+    </view>
+    
+    <view class="menu-item card" bindtap="showSettings">
+      <view class="menu-icon">⚙️</view>
+      <view class="menu-text">设置</view>
+      <view class="menu-arrow">></view>
+    </view>
+  </view>
+
+  <!-- 广告位 -->
+  <view class="ad-container">
+    <!-- 激励视频广告位 -->
+    <!-- <ad unit-id="adunit-rewardedvideo-xxxxxxxx" ad-type="video" ad-theme="white"></ad> -->
+  </view>
+
+  <!-- 关于我们 -->
+  <view class="about-section card">
+    <view class="about-title">关于佛珠鉴赏</view>
+    <view class="about-text">专业的佛珠鉴赏平台，帮助您了解佛珠文化，提供AI智能鉴赏服务。</view>
+    <view class="version-info">版本 1.0.0</view>
+  </view>
+</view>

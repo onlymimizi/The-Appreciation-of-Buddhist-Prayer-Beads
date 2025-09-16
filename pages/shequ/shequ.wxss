@@ -1,0 +1,189 @@
+/**shequ.wxss**/
+.container {
+  padding: 0;
+  background: #f8f8f8;
+}
+
+/* 顶部导航 */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+
+.nav-tabs {
+  display: flex;
+}
+
+.nav-tab {
+  padding: 15rpx 30rpx;
+  font-size: 28rpx;
+  color: #666666;
+  border-radius: 20rpx;
+  margin-right: 20rpx;
+  transition: all 0.3s;
+}
+
+.nav-tab.active {
+  background: #007AFF;
+  color: #ffffff;
+}
+
+.post-btn {
+  width: 60rpx;
+  height: 60rpx;
+  background: #007AFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 36rpx;
+  font-weight: 300;
+}
+
+/* 广告位 */
+.ad-container {
+  margin: 20rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+/* 帖子列表 */
+.post-list {
+  padding: 0 20rpx;
+}
+
+.post-item {
+  margin-bottom: 20rpx;
+}
+
+/* 帖子头部 */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 5rpx;
+}
+
+.post-time {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.hot-tag {
+  background: #ff6b6b;
+  color: #ffffff;
+  font-size: 20rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+}
+
+.elite-tag {
+  background: #ffd93d;
+  color: #333333;
+  font-size: 20rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+}
+
+/* 帖子内容 */
+.post-content {
+  margin-bottom: 20rpx;
+}
+
+.post-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 15rpx;
+  line-height: 1.4;
+}
+
+.post-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+}
+
+.post-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10rpx;
+}
+
+.post-image {
+  width: 100%;
+  height: 200rpx;
+  border-radius: 12rpx;
+}
+
+.post-images .post-image:first-child:nth-last-child(1) {
+  grid-column: span 3;
+  height: 300rpx;
+}
+
+.post-images .post-image:first-child:nth-last-child(2),
+.post-images .post-image:first-child:nth-last-child(2) ~ .post-image {
+  grid-column: span 1.5;
+  height: 250rpx;
+}
+
+/* 帖子统计 */
+.post-stats {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #e5e5e5;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.stat-icon {
+  margin-right: 10rpx;
+  font-size: 28rpx;
+}
+
+.stat-icon.liked {
+  color: #ff6b6b;
+}
+
+.stat-text {
+  font-size: 24rpx;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 40rpx;
+  color: #999999;
+  font-size: 26rpx;
+}

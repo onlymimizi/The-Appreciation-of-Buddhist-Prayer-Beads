@@ -1,0 +1,93 @@
+<!--result.wxml-->
+<view class="container">
+  <!-- 分析结果卡片 -->
+  <view class="result-card card">
+    <!-- 佛珠图片 -->
+    <view class="image-section">
+      <image class="result-image" src="{{imageUrl}}" mode="aspectFill" bindtap="previewImage"></image>
+      <view class="image-overlay">
+        <view class="analysis-status">
+          <text class="status-icon">✓</text>
+          <text class="status-text">AI鉴赏完成</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 鉴赏结果 -->
+    <view class="analysis-result">
+      <view class="result-title">鉴赏结果</view>
+      
+      <view class="result-item">
+        <view class="result-label">材质</view>
+        <view class="result-value">{{result.material}}</view>
+      </view>
+      
+      <view class="result-item">
+        <view class="result-label">工艺</view>
+        <view class="result-value">{{result.craft}}</view>
+      </view>
+      
+      <view class="result-item">
+        <view class="result-label">估值范围</view>
+        <view class="result-value price">{{result.estimate}}</view>
+      </view>
+      
+      <view class="result-item comment">
+        <view class="result-label">专家点评</view>
+        <view class="result-comment">{{result.comment}}</view>
+      </view>
+    </view>
+
+    <!-- 置信度 -->
+    <view class="confidence-section">
+      <view class="confidence-title">识别置信度</view>
+      <view class="confidence-bar">
+        <view class="confidence-fill" style="width: {{result.confidence}}%"></view>
+      </view>
+      <view class="confidence-text">{{result.confidence}}%</view>
+    </view>
+  </view>
+
+  <!-- 广告位 -->
+  <view class="ad-container">
+    <!-- Banner广告位 -->
+    <!-- <ad unit-id="adunit-banner-xxxxxxxx" ad-intervals="30"></ad> -->
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="action-btn secondary" bindtap="saveResult">
+      <text class="btn-icon">💾</text>
+      <text class="btn-text">保存结果</text>
+    </button>
+    
+    <button class="action-btn primary" bindtap="shareResult" open-type="share">
+      <text class="btn-icon">📤</text>
+      <text class="btn-text">分享结果</text>
+    </button>
+  </view>
+
+  <!-- 相关推荐 -->
+  <view class="recommend-section">
+    <view class="section-title">相关推荐</view>
+    <view class="recommend-list">
+      <block wx:for="{{recommendList}}" wx:key="id">
+        <view class="recommend-item" bindtap="viewRecommend" data-id="{{item.id}}">
+          <image class="recommend-image" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="recommend-info">
+            <view class="recommend-name">{{item.name}}</view>
+            <view class="recommend-desc">{{item.desc}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 重新分析按钮 -->
+  <view class="reanalyze-section">
+    <button class="reanalyze-btn" bindtap="reanalyze">
+      <text class="btn-icon">🔄</text>
+      <text class="btn-text">重新分析</text>
+    </button>
+  </view>
+</view>

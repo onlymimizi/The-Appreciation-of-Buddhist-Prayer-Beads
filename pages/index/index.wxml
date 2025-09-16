@@ -1,0 +1,83 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 轮播图 -->
+  <view class="swiper-container">
+    <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" duration="{{500}}">
+      <block wx:for="{{swiperList}}" wx:key="id">
+        <swiper-item>
+          <image src="{{item.image}}" class="swiper-image" mode="aspectFill"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <!-- AI鉴赏功能区 -->
+  <view class="ai-section card">
+    <view class="ai-title">
+      <text class="ai-icon">🤖</text>
+      <text class="ai-text">AI智能鉴赏</text>
+    </view>
+    <view class="ai-desc">上传佛珠照片，获得专业鉴赏报告</view>
+    <view class="upload-buttons">
+      <button class="upload-btn camera" bindtap="takePhoto">
+        <text class="btn-icon">📷</text>
+        <text class="btn-text">拍照鉴赏</text>
+      </button>
+      <button class="upload-btn album" bindtap="chooseImage">
+        <text class="btn-icon">🖼️</text>
+        <text class="btn-text">相册选择</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-section card">
+    <view class="stats-title">鉴赏统计</view>
+    <view class="stats-info">
+      <view class="stat-item">
+        <view class="stat-number">{{totalAnalysis}}</view>
+        <view class="stat-label">总鉴赏次数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-number">{{todayAnalysis}}</view>
+        <view class="stat-label">今日鉴赏</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 广告位 -->
+  <view class="ad-container">
+    <!-- Banner广告位 -->
+    <!-- <ad unit-id="adunit-banner-xxxxxxxx" ad-intervals="30"></ad> -->
+  </view>
+
+  <!-- 推荐佛珠 -->
+  <view class="recommend-section">
+    <view class="section-title">精品推荐</view>
+    <view class="recommend-grid">
+      <block wx:for="{{recommendList}}" wx:key="id">
+        <view class="recommend-item" bindtap="viewDetail" data-id="{{item.id}}">
+          <image src="{{item.image}}" class="recommend-image" mode="aspectFill"></image>
+          <view class="recommend-info">
+            <view class="recommend-name">{{item.name}}</view>
+            <view class="recommend-desc">{{item.desc}}</view>
+            <view class="recommend-price">{{item.price}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 佛珠知识 -->
+  <view class="knowledge-section">
+    <view class="section-title">佛珠知识</view>
+    <view class="knowledge-list">
+      <block wx:for="{{knowledgeList}}" wx:key="id">
+        <view class="knowledge-item card" bindtap="viewKnowledge" data-id="{{item.id}}">
+          <view class="knowledge-title">{{item.title}}</view>
+          <view class="knowledge-summary">{{item.summary}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

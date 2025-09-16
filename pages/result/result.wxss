@@ -1,0 +1,258 @@
+/**result.wxss**/
+.container {
+  padding: 20rpx;
+  background: #f8f8f8;
+}
+
+/* 结果卡片 */
+.result-card {
+  margin-bottom: 30rpx;
+  overflow: hidden;
+}
+
+/* 图片区域 */
+.image-section {
+  position: relative;
+  margin-bottom: 30rpx;
+}
+
+.result-image {
+  width: 100%;
+  height: 400rpx;
+  border-radius: 16rpx;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+}
+
+.analysis-status {
+  background: rgba(0, 122, 255, 0.9);
+  color: #ffffff;
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+.status-icon {
+  margin-right: 10rpx;
+  font-size: 20rpx;
+}
+
+/* 分析结果 */
+.analysis-result {
+  margin-bottom: 30rpx;
+}
+
+.result-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25rpx;
+  padding-bottom: 25rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-item.comment {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.result-label {
+  font-size: 28rpx;
+  color: #666666;
+  font-weight: 500;
+  min-width: 120rpx;
+}
+
+.result-value {
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: 600;
+  text-align: right;
+  flex: 1;
+}
+
+.result-value.price {
+  color: #ff6b6b;
+  font-size: 36rpx;
+}
+
+.result-comment {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+  margin-top: 15rpx;
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  border-left: 4rpx solid #007AFF;
+}
+
+/* 置信度 */
+.confidence-section {
+  background: #f8f9fa;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.confidence-title {
+  font-size: 28rpx;
+  color: #666666;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.confidence-bar {
+  height: 12rpx;
+  background: #e5e5e5;
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-bottom: 15rpx;
+}
+
+.confidence-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #007AFF, #00D4AA);
+  border-radius: 6rpx;
+  transition: width 0.5s ease;
+}
+
+.confidence-text {
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #007AFF;
+}
+
+/* 广告位 */
+.ad-container {
+  margin: 30rpx 0;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25rpx;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+.action-btn.primary {
+  background: #007AFF;
+  color: #ffffff;
+}
+
+.action-btn.secondary {
+  background: #f0f0f0;
+  color: #333333;
+}
+
+.btn-icon {
+  margin-right: 15rpx;
+  font-size: 32rpx;
+}
+
+/* 相关推荐 */
+.recommend-section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 25rpx;
+}
+
+.recommend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.recommend-item {
+  display: flex;
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.recommend-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+}
+
+.recommend-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.recommend-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+
+.recommend-desc {
+  font-size: 24rpx;
+  color: #666666;
+  line-height: 1.4;
+}
+
+/* 重新分析 */
+.reanalyze-section {
+  text-align: center;
+}
+
+.reanalyze-btn {
+  background: #ffffff;
+  color: #007AFF;
+  border: 2rpx solid #007AFF;
+  border-radius: 16rpx;
+  padding: 25rpx 60rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reanalyze-btn .btn-icon {
+  margin-right: 15rpx;
+  font-size: 32rpx;
+}

@@ -1,0 +1,214 @@
+/**index.wxss**/
+.container {
+  padding: 0;
+  background: #f8f8f8;
+}
+
+/* 轮播图样式 */
+.swiper-container {
+  margin-bottom: 20rpx;
+}
+
+.swiper {
+  height: 400rpx;
+}
+
+.swiper-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* AI鉴赏功能区 */
+.ai-section {
+  margin: 20rpx;
+  text-align: center;
+}
+
+.ai-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.ai-icon {
+  font-size: 48rpx;
+  margin-right: 15rpx;
+}
+
+.ai-text {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.ai-desc {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 40rpx;
+  line-height: 1.5;
+}
+
+.upload-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+.upload-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 20rpx;
+  border-radius: 16rpx;
+  border: none;
+  font-size: 28rpx;
+  transition: all 0.3s;
+}
+
+.upload-btn.camera {
+  background: linear-gradient(135deg, #007AFF, #0056CC);
+  color: #ffffff;
+}
+
+.upload-btn.album {
+  background: linear-gradient(135deg, #34C759, #28A745);
+  color: #ffffff;
+}
+
+.upload-btn:active {
+  transform: scale(0.95);
+}
+
+.btn-icon {
+  font-size: 48rpx;
+  margin-bottom: 15rpx;
+}
+
+.btn-text {
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* 统计信息 */
+.stats-section {
+  margin: 20rpx;
+}
+
+.stats-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 25rpx;
+  text-align: center;
+}
+
+.stats-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30rpx;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #007AFF;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 广告位样式 */
+.ad-container {
+  margin: 20rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+/* 推荐区域 */
+.recommend-section {
+  margin: 20rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 30rpx;
+  padding-left: 10rpx;
+}
+
+.recommend-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+.recommend-item {
+  background: #ffffff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.recommend-image {
+  width: 100%;
+  height: 200rpx;
+}
+
+.recommend-info {
+  padding: 20rpx;
+}
+
+.recommend-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 10rpx;
+}
+
+.recommend-desc {
+  font-size: 24rpx;
+  color: #666666;
+  margin-bottom: 15rpx;
+}
+
+.recommend-price {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #ff6b6b;
+}
+
+/* 知识区域 */
+.knowledge-section {
+  margin: 40rpx 20rpx 20rpx;
+}
+
+.knowledge-list {
+  margin-top: 30rpx;
+}
+
+.knowledge-item {
+  margin-bottom: 20rpx;
+}
+
+.knowledge-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 15rpx;
+}
+
+.knowledge-summary {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.5;
+}
