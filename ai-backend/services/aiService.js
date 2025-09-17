@@ -1,5 +1,6 @@
 const openaiService = require('./openaiService');
 const geminiService = require('./geminiService');
+const qwenService = require('./qwenService');
 
 class AIService {
   constructor() {
@@ -11,6 +12,9 @@ class AIService {
       let result;
       
       switch (this.service) {
+        case 'qwen':
+          result = await qwenService.analyzeBeads(imageBuffer);
+          break;
         case 'gemini':
           result = await geminiService.analyzeBeads(imageBuffer);
           break;
@@ -39,6 +43,44 @@ class AIService {
       
       // 如果AI服务失败，返回基础分析结果
       return this.getFallbackResult();
+    }
+  }
+
+  // 获取当前 AI 服务状态
+  getServiceStatus() {
+    const baseStatus = {
+      currentService: this.service,
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      switch (this.service) {
+        case 'qwen':
+          return {
+            ...baseStatus,
+            ...qwenService.getServiceInfo(),
+            available: !!process.env.QWEN_API_KEY
+          };
+        case 'gemini':
+          return {
+            ...baseStatus,
+            provider: 'google',
+            available: !!process.env.GEMINI_API_KEY
+          };
+        case 'openai':
+        default:
+          return {
+            ...baseStatus,
+            provider: 'openai',
+            available: !!process.env.OPENAI_API_KEY
+          };
+      }
+    } catch (error) {
+      return {
+        ...baseStatus,
+        available: false,
+        error: error.message
+      };
     }
   }
 

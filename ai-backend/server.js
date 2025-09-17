@@ -77,6 +77,24 @@ app.get('/health', (req, res) => {
   });
 });
 
+// AI 服务状态检查
+app.get('/api/ai/status', (req, res) => {
+  try {
+    const status = aiService.getServiceStatus();
+    res.json({
+      success: true,
+      data: status
+    });
+  } catch (error) {
+    console.error('获取AI服务状态失败:', error);
+    res.status(500).json({
+      success: false,
+      error: '无法获取AI服务状态',
+      details: error.message
+    });
+  }
+});
+
 // AI 分析接口 - 支持图片上传
 app.post('/api/analyze', aiLimiter, upload.single('image'), async (req, res) => {
   try {
