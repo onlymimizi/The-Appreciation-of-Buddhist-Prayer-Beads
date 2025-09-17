@@ -1,83 +1,122 @@
-<!--index.wxml-->
+<!--pages/index/index.wxml - 更新版本，支持AI状态显示-->
 <view class="container">
-  <!-- 轮播图 -->
-  <view class="swiper-container">
-    <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" duration="{{500}}">
-      <block wx:for="{{swiperList}}" wx:key="id">
-        <swiper-item>
-          <image src="{{item.image}}" class="swiper-image" mode="aspectFill"></image>
-        </swiper-item>
-      </block>
+  <!-- 顶部统计区域 -->
+  <view class="stats-section">
+    <view class="stats-card">
+      <view class="stats-item">
+        <text class="stats-number">{{totalAnalysis}}</text>
+        <text class="stats-label">总分析次数</text>
+      </view>
+      <view class="stats-divider"></view>
+      <view class="stats-item">
+        <text class="stats-number">{{todayAnalysis}}</text>
+        <text class="stats-label">今日分析</text>
+      </view>
+      <view class="stats-divider"></view>
+      <view class="stats-item" bindtap="viewAIStatus">
+        <view class="ai-status-indicator {{aiServiceStatus}}"></view>
+        <text class="stats-label">AI服务</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 轮播图区域 -->
+  <view class="swiper-section">
+    <swiper 
+      class="main-swiper" 
+      indicator-dots="{{true}}" 
+      autoplay="{{true}}" 
+      interval="{{3000}}"
+      duration="{{500}}"
+      circular="{{true}}"
+    >
+      <swiper-item wx:for="{{swiperList}}" wx:key="id">
+        <image class="swiper-image" src="{{item.image}}" mode="aspectFill" />
+      </swiper-item>
     </swiper>
   </view>
 
-  <!-- AI鉴赏功能区 -->
-  <view class="ai-section card">
-    <view class="ai-title">
-      <text class="ai-icon">🤖</text>
-      <text class="ai-text">AI智能鉴赏</text>
+  <!-- 主要功能区域 -->
+  <view class="function-section">
+    <view class="function-title">
+      <text class="title-text">AI智能鉴赏</text>
+      <text class="title-desc">专业佛珠材质识别与价值评估</text>
     </view>
-    <view class="ai-desc">上传佛珠照片，获得专业鉴赏报告</view>
-    <view class="upload-buttons">
-      <button class="upload-btn camera" bindtap="takePhoto">
-        <text class="btn-icon">📷</text>
-        <text class="btn-text">拍照鉴赏</text>
+    
+    <view class="function-buttons">
+      <button class="function-btn camera-btn" bindtap="takePhoto">
+        <view class="btn-icon">
+          <text class="iconfont icon-camera"></text>
+        </view>
+        <text class="btn-text">拍照识别</text>
+        <text class="btn-desc">实时拍摄佛珠照片</text>
       </button>
-      <button class="upload-btn album" bindtap="chooseImage">
-        <text class="btn-icon">🖼️</text>
+      
+      <button class="function-btn album-btn" bindtap="chooseImage">
+        <view class="btn-icon">
+          <text class="iconfont icon-image"></text>
+        </view>
         <text class="btn-text">相册选择</text>
+        <text class="btn-desc">从相册选择图片</text>
       </button>
     </view>
-  </view>
 
-  <!-- 统计信息 -->
-  <view class="stats-section card">
-    <view class="stats-title">鉴赏统计</view>
-    <view class="stats-info">
-      <view class="stat-item">
-        <view class="stat-number">{{totalAnalysis}}</view>
-        <view class="stat-label">总鉴赏次数</view>
-      </view>
-      <view class="stat-item">
-        <view class="stat-number">{{todayAnalysis}}</view>
-        <view class="stat-label">今日鉴赏</view>
-      </view>
+    <!-- 历史记录入口 -->
+    <view class="history-entry" bindtap="viewHistory">
+      <text class="iconfont icon-history"></text>
+      <text class="history-text">查看分析历史</text>
+      <text class="iconfont icon-arrow-right"></text>
     </view>
   </view>
 
-  <!-- 广告位 -->
-  <view class="ad-container">
-    <!-- Banner广告位 -->
-    <!-- <ad unit-id="adunit-banner-xxxxxxxx" ad-intervals="30"></ad> -->
-  </view>
-
-  <!-- 推荐佛珠 -->
+  <!-- 推荐商品区域 -->
   <view class="recommend-section">
-    <view class="section-title">精品推荐</view>
-    <view class="recommend-grid">
-      <block wx:for="{{recommendList}}" wx:key="id">
-        <view class="recommend-item" bindtap="viewDetail" data-id="{{item.id}}">
-          <image src="{{item.image}}" class="recommend-image" mode="aspectFill"></image>
+    <view class="section-header">
+      <text class="section-title">精品推荐</text>
+      <text class="section-more">更多 ></text>
+    </view>
+    
+    <scroll-view class="recommend-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view class="recommend-list">
+        <view 
+          class="recommend-item" 
+          wx:for="{{recommendList}}" 
+          wx:key="id"
+          bindtap="viewDetail"
+          data-id="{{item.id}}"
+        >
+          <image class="recommend-image" src="{{item.image}}" mode="aspectFill" />
           <view class="recommend-info">
-            <view class="recommend-name">{{item.name}}</view>
-            <view class="recommend-desc">{{item.desc}}</view>
-            <view class="recommend-price">{{item.price}}</view>
+            <text class="recommend-name">{{item.name}}</text>
+            <text class="recommend-desc">{{item.desc}}</text>
+            <text class="recommend-price">{{item.price}}</text>
           </view>
         </view>
-      </block>
-    </view>
+      </view>
+    </scroll-view>
   </view>
 
-  <!-- 佛珠知识 -->
+  <!-- 知识百科区域 -->
   <view class="knowledge-section">
-    <view class="section-title">佛珠知识</view>
+    <view class="section-header">
+      <text class="section-title">佛珠百科</text>
+      <text class="section-more">更多 ></text>
+    </view>
+    
     <view class="knowledge-list">
-      <block wx:for="{{knowledgeList}}" wx:key="id">
-        <view class="knowledge-item card" bindtap="viewKnowledge" data-id="{{item.id}}">
-          <view class="knowledge-title">{{item.title}}</view>
-          <view class="knowledge-summary">{{item.summary}}</view>
+      <view 
+        class="knowledge-item" 
+        wx:for="{{knowledgeList}}" 
+        wx:key="id"
+        bindtap="viewKnowledge"
+        data-id="{{item.id}}"
+      >
+        <view class="knowledge-content">
+          <text class="knowledge-title">{{item.title}}</text>
+          <text class="knowledge-summary">{{item.summary}}</text>
         </view>
-      </block>
+        <text class="iconfont icon-arrow-right knowledge-arrow"></text>
+      </view>
     </view>
   </view>
 </view>

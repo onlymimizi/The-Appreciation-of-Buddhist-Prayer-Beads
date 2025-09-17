@@ -1,258 +1,270 @@
-/**result.wxss**/
+/* pages/result/result.wxss - 更新版本样式 */
 .container {
   padding: 20rpx;
-  background: #f8f8f8;
+  background-color: #f8f8f8;
+  min-height: 100vh;
 }
 
-/* 结果卡片 */
-.result-card {
-  margin-bottom: 30rpx;
-  overflow: hidden;
-}
-
-/* 图片区域 */
+/* 图片展示区域 */
 .image-section {
-  position: relative;
-  margin-bottom: 30rpx;
+  background: white;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
 }
 
 .result-image {
   width: 100%;
   height: 400rpx;
-  border-radius: 16rpx;
-}
-
-.image-overlay {
-  position: absolute;
-  top: 20rpx;
-  right: 20rpx;
-}
-
-.analysis-status {
-  background: rgba(0, 122, 255, 0.9);
-  color: #ffffff;
-  padding: 10rpx 20rpx;
-  border-radius: 20rpx;
-  display: flex;
-  align-items: center;
-  font-size: 24rpx;
-}
-
-.status-icon {
-  margin-right: 10rpx;
-  font-size: 20rpx;
-}
-
-/* 分析结果 */
-.analysis-result {
-  margin-bottom: 30rpx;
-}
-
-.result-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #333333;
-  margin-bottom: 30rpx;
-  text-align: center;
-}
-
-.result-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 25rpx;
-  padding-bottom: 25rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.result-item:last-child {
-  border-bottom: none;
-}
-
-.result-item.comment {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.result-label {
-  font-size: 28rpx;
-  color: #666666;
-  font-weight: 500;
-  min-width: 120rpx;
-}
-
-.result-value {
-  font-size: 32rpx;
-  color: #333333;
-  font-weight: 600;
-  text-align: right;
-  flex: 1;
-}
-
-.result-value.price {
-  color: #ff6b6b;
-  font-size: 36rpx;
-}
-
-.result-comment {
-  font-size: 28rpx;
-  color: #333333;
-  line-height: 1.6;
-  margin-top: 15rpx;
-  background: #f8f9fa;
-  padding: 20rpx;
   border-radius: 12rpx;
-  border-left: 4rpx solid #007AFF;
+  background-color: #f5f5f5;
 }
 
-/* 置信度 */
-.confidence-section {
-  background: #f8f9fa;
-  padding: 30rpx;
-  border-radius: 16rpx;
-  margin-bottom: 30rpx;
-}
-
-.confidence-title {
-  font-size: 28rpx;
-  color: #666666;
-  margin-bottom: 20rpx;
-  text-align: center;
-}
-
-.confidence-bar {
-  height: 12rpx;
-  background: #e5e5e5;
-  border-radius: 6rpx;
-  overflow: hidden;
-  margin-bottom: 15rpx;
-}
-
-.confidence-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #007AFF, #00D4AA);
-  border-radius: 6rpx;
-  transition: width 0.5s ease;
-}
-
-.confidence-text {
-  text-align: center;
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #007AFF;
-}
-
-/* 广告位 */
-.ad-container {
-  margin: 30rpx 0;
-  border-radius: 16rpx;
-  overflow: hidden;
-}
-
-/* 操作按钮 */
-.action-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20rpx;
-  margin-bottom: 40rpx;
+.image-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20rpx;
 }
 
 .action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 25rpx;
-  border-radius: 16rpx;
+  padding: 16rpx 32rpx;
+  background-color: #f0f0f0;
+  border-radius: 24rpx;
   font-size: 28rpx;
+  color: #333;
   border: none;
 }
 
-.action-btn.primary {
-  background: #007AFF;
-  color: #ffffff;
-}
-
-.action-btn.secondary {
-  background: #f0f0f0;
-  color: #333333;
-}
-
-.btn-icon {
-  margin-right: 15rpx;
+.action-btn .iconfont {
+  margin-right: 8rpx;
   font-size: 32rpx;
 }
 
-/* 相关推荐 */
-.recommend-section {
-  margin-bottom: 40rpx;
-}
-
-.section-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #333333;
-  margin-bottom: 25rpx;
-}
-
-.recommend-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15rpx;
-}
-
-.recommend-item {
-  display: flex;
-  background: #ffffff;
+/* 结果卡片通用样式 */
+.info-card,
+.features-card,
+.comment-card,
+.description-card,
+.cultural-card,
+.care-card,
+.ai-info-card {
+  background: white;
   border-radius: 16rpx;
-  padding: 20rpx;
-  box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, 0.05);
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
 }
 
-.recommend-image {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 12rpx;
-  margin-right: 20rpx;
-}
-
-.recommend-info {
-  flex: 1;
+.card-header {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
 }
 
-.recommend-name {
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.toggle-btn {
   font-size: 28rpx;
-  font-weight: 600;
-  color: #333333;
-  margin-bottom: 10rpx;
-}
-
-.recommend-desc {
-  font-size: 24rpx;
-  color: #666666;
-  line-height: 1.4;
-}
-
-/* 重新分析 */
-.reanalyze-section {
-  text-align: center;
-}
-
-.reanalyze-btn {
-  background: #ffffff;
   color: #007AFF;
-  border: 2rpx solid #007AFF;
+  padding: 8rpx 16rpx;
   border-radius: 16rpx;
-  padding: 25rpx 60rpx;
+  background-color: #f0f8ff;
+}
+
+/* 基本信息卡片 */
+.confidence-badge {
+  background: linear-gradient(135deg, #007AFF, #5AC8FA);
+  color: white;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+.info-item {
+  text-align: center;
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.info-label {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.info-value {
+  display: block;
   font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.info-value.material {
+  color: #007AFF;
+}
+
+.info-value.price {
+  color: #FF6B35;
+}
+
+/* 特征标签 */
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.feature-tag {
+  background: linear-gradient(135deg, #FF6B35, #F7931E);
+  color: white;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+/* 评价内容 */
+.comment-content {
+  line-height: 1.6;
+}
+
+.comment-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.8;
+}
+
+.comment-text.ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.comment-text.full {
+  display: block;
+}
+
+/* 描述文本 */
+.description-text,
+.cultural-text,
+.care-text {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* AI信息卡片 */
+.ai-info-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.ai-info-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ai-info-text,
+.ai-service-text {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+/* 操作按钮区域 */
+.action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-top: 40rpx;
+  padding-bottom: 40rpx;
+}
+
+.primary-btn,
+.secondary-btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  border: none;
 }
 
-.reanalyze-btn .btn-icon {
-  margin-right: 15rpx;
-  font-size: 32rpx;
+.primary-btn {
+  background: linear-gradient(135deg, #007AFF, #5AC8FA);
+  color: white;
+}
+
+.secondary-btn {
+  background-color: white;
+  color: #007AFF;
+  border: 2rpx solid #007AFF;
+}
+
+.primary-btn .iconfont,
+.secondary-btn .iconfont {
+  margin-right: 12rpx;
+  font-size: 36rpx;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .image-actions {
+    flex-direction: column;
+    gap: 16rpx;
+  }
+  
+  .action-btn {
+    width: 100%;
+  }
+}
+
+/* 动画效果 */
+.info-card,
+.features-card,
+.comment-card,
+.description-card,
+.cultural-card,
+.care-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 加载状态 */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
 }

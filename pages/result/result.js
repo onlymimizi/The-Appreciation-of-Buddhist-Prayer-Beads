@@ -1,124 +1,272 @@
-// result.js
+// pages/result/result.js - 更新版本，支持新的AI分析结果
+const { saveAnalysisHistory } = require('../../utils/api')
+
 Page({
   data: {
     imageUrl: '',
-    result: {
-      material: '',
-      craft: '',
-      estimate: '',
-      comment: '',
-      confidence: 0
-    },
-    recommendList: [
-      {
-        id: 1,
-        name: '小叶紫檀鉴别指南',
-        desc: '详细介绍小叶紫檀的特征',
-        image: '/images/guide1.jpg'
-      },
-      {
-        id: 2,
-        name: '佛珠保养技巧',
-        desc: '让你的佛珠保持最佳状态',
-        image: '/images/guide2.jpg'
-      },
-      {
-        id: 3,
-        name: '文玩市场行情',
-        desc: '了解最新的市场价格',
-        image: '/images/guide3.jpg'
-      }
-    ]
+    result: null,
+    loading: false,
+    showFullComment: false,
+    showCulturalBackground: false,
+    showCareInstructions: false
   },
 
   onLoad(options) {
-    // 获取传递的参数
-    if (options.imageUrl) {
-      this.setData({
-        imageUrl: decodeURIComponent(options.imageUrl)
-      })
-    }
-    
-    if (options.result) {
+    if (options.imageUrl && options.result) {
       try {
         const result = JSON.parse(decodeURIComponent(options.result))
         this.setData({
+          imageUrl: decodeURIComponent(options.imageUrl),
           result: result
         })
-      } catch (e) {
-        console.error('解析结果数据失败:', e)
+        
+        // 设置页面标题
+        wx.setNavigationBarTitle({
+          title: `${result.material || '佛珠'}鉴赏结果`
+        })
+      } catch (error) {
+        console.error('解析结果数据失败:', error)
+        wx.showToast({
+          title: '数据解析失败',
+          icon: 'error'
+        })
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 2000)
       }
+    } else {
+      wx.showToast({
+        title: '缺少必要参数',
+        icon: 'error'
+      })
+      setTimeout(() => {
+        wx.navigateBack()
+      }, 2000)
     }
-
-    // 更新鉴赏次数统计
-    this.updateAnalysisCount()
   },
 
-  updateAnalysisCount() {
-    const currentCount = wx.getStorageSync('totalAnalysis') || 0
-    wx.setStorageSync('totalAnalysis', currentCount + 1)
-  },
-
+  // 预览图片
   previewImage() {
-    wx.previewImage({
-      current: this.data.imageUrl,
-      urls: [this.data.imageUrl]
+    if (this.data.imageUrl) {
+      wx.previewImage({
+        urls: [this.data.imageUrl],
+        current: this.data.imageUrl
+      })
+    }
+  },
+
+  // 切换完整评价显示
+  toggleFullComment() {
+    this.setData({
+      showFullComment: !this.data.showFullComment
     })
   },
 
-  saveResult() {
-    const { imageUrl, result } = this.data
-    const savedResults = wx.getStorageSync('analysisHistory') || []
-    
-    const newResult = {
-      id: Date.now(),
-      imageUrl,
-      result,
-      timestamp: new Date().toISOString(),
-      date: new Date().toLocaleDateString()
-    }
-    
-    savedResults.unshift(newResult)
-    
-    // 最多保存50条记录
-    if (savedResults.length > 50) {
-      savedResults.splice(50)
-    }
-    
-    wx.setStorageSync('analysisHistory', savedResults)
-    
-    wx.showToast({
-      title: '保存成功',
-      icon: 'success'
+  // 切换文化背景显示
+  toggleCulturalBackground() {
+    this.setData({
+      showCulturalBackground: !this.data.showCulturalBackground
     })
   },
 
+  // 切换保养说明显示
+  toggleCareInstructions() {
+    this.setData({
+      showCareInstructions: !this.data.showCareInstructions
+    })
+  },
+
+  // 保存到相册
+  saveToAlbum() {
+    if (!this.data.imageUrl) {
+      wx.showToast({
+        title: '没有图片可保存',
+        icon: 'error'
+      })
+      return
+    }
+
+    wx.showLoading({
+      title: '保存中...'
+    })
+
+    wx.saveImageToPhotosAlbum({
+      filePath: this.data.imageUrl,
+      success: () => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success'
+        })
+      },
+      fail: (error) => {
+        wx.hideLoading()
+        console.error('保存失败:', error)
+        
+        if (error.errMsg.includes('auth')) {
+          wx.showModal({
+            title: '需要相册权限',
+            content: '请在设置中开启相册权限，以便保存图片',
+            confirmText: '去设置',
+            success: (res) => {
+              if (res.confirm) {
+                wx.openSetting()
+              }
+            }
+          })
+        } else {
+          wx.showToast({
+            title: '保存失败',
+            icon: 'error'
+          })
+        }
+      }
+    })
+  },
+
+  // 重新分析
+  reAnalyze() {
+    wx.showModal({
+      title: '重新分析',
+      content: '是否要重新分析这张图片？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.navigateBack()
+        }
+      }
+    })
+  },
+
+  // 分享结果
   shareResult() {
-    // 分享功能会通过onShareAppMessage实现
-    wx.showToast({
-      title: '点击右上角分享',
-      icon: 'none'
+    const { result } = this.data
+    if (!result) return
+
+    const shareText = `我用AI鉴赏了一串${result.material}佛珠：
+材质：${result.material}
+工艺：${result.craft}
+估价：${result.estimate}
+置信度：${result.confidence}%
+
+${result.comment}`
+
+    wx.setClipboardData({
+      data: shareText,
+      success: () => {
+        wx.showToast({
+          title: '已复制到剪贴板',
+          icon: 'success'
+        })
+      }
     })
   },
 
-  viewRecommend(e) {
-    const id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: `/pages/baike/baike?id=${id}`
+  // 查看相似商品
+  viewSimilarProducts() {
+    const { result } = this.data
+    if (result && result.material) {
+      wx.navigateTo({
+        url: `/pages/baike/baike?material=${encodeURIComponent(result.material)}`
+      })
+    }
+  },
+
+  // 添加到收藏
+  addToFavorites() {
+    const { imageUrl, result } = this.data
+    if (!result) return
+
+    try {
+      const favorites = wx.getStorageSync('favorites') || []
+      const favorite = {
+        id: Date.now(),
+        imageUrl: imageUrl,
+        result: result,
+        timestamp: new Date().toISOString()
+      }
+      
+      favorites.unshift(favorite)
+      
+      // 只保留最近20个收藏
+      if (favorites.length > 20) {
+        favorites.splice(20)
+      }
+      
+      wx.setStorageSync('favorites', favorites)
+      
+      wx.showToast({
+        title: '已添加到收藏',
+        icon: 'success'
+      })
+    } catch (error) {
+      console.error('添加收藏失败:', error)
+      wx.showToast({
+        title: '收藏失败',
+        icon: 'error'
+      })
+    }
+  },
+
+  // 查看置信度说明
+  showConfidenceInfo() {
+    const confidence = this.data.result?.confidence || 0
+    let description = ''
+    
+    if (confidence >= 90) {
+      description = '置信度很高，AI对分析结果非常确信'
+    } else if (confidence >= 75) {
+      description = '置信度较高，AI对分析结果比较确信'
+    } else if (confidence >= 60) {
+      description = '置信度中等，建议结合专业人士意见'
+    } else {
+      description = '置信度较低，建议寻求专业鉴定'
+    }
+
+    wx.showModal({
+      title: `置信度 ${confidence}%`,
+      content: description,
+      showCancel: false,
+      confirmText: '知道了'
     })
   },
 
-  reanalyze() {
-    wx.navigateBack({
-      delta: 1
+  // 查看AI服务信息
+  showAIServiceInfo() {
+    const aiService = this.data.result?.aiService || 'unknown'
+    const serviceNames = {
+      'openai': 'OpenAI GPT-4 Vision',
+      'gemini': 'Google Gemini Vision',
+      'fallback': '离线模式',
+      'unknown': '未知服务'
+    }
+
+    wx.showModal({
+      title: 'AI服务信息',
+      content: `本次分析使用：${serviceNames[aiService]}`,
+      showCancel: false,
+      confirmText: '知道了'
     })
   },
 
+  // 分享给好友
   onShareAppMessage() {
     const { result } = this.data
+    if (!result) return {}
+
     return {
-      title: `AI鉴赏结果：${result.material} - ${result.estimate}`,
-      path: `/pages/result/result?imageUrl=${encodeURIComponent(this.data.imageUrl)}&result=${encodeURIComponent(JSON.stringify(this.data.result))}`,
+      title: `AI鉴赏：${result.material} - ${result.estimate}`,
+      path: `/pages/result/result?imageUrl=${encodeURIComponent(this.data.imageUrl)}&result=${encodeURIComponent(JSON.stringify(result))}`,
+      imageUrl: this.data.imageUrl
+    }
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    const { result } = this.data
+    if (!result) return {}
+
+    return {
+      title: `AI鉴赏佛珠：${result.material}`,
       imageUrl: this.data.imageUrl
     }
   }

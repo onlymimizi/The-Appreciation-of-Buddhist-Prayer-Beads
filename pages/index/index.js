@@ -1,11 +1,12 @@
-// index.js
+// index.js - 更新版本，支持 AI 后端服务
 const { uploadImage, compressImage, showLoading, hideLoading, showSuccess, showError } = require('../../utils/util')
-const { analyzeBeads } = require('../../utils/api')
+const { analyzeBeads, checkHealth, saveAnalysisHistory } = require('../../utils/api')
 
 Page({
   data: {
     totalAnalysis: 0,
     todayAnalysis: 0,
+    aiServiceStatus: 'unknown', // unknown, healthy, unhealthy
     swiperList: [
       {
         id: 1,
@@ -71,10 +72,17 @@ Page({
 
   onLoad() {
     this.loadStats()
+    this.checkAIService()
   },
 
   onShow() {
     this.loadStats()
+  },
+
+  onPullDownRefresh() {
+    this.loadStats()
+    this.checkAIService()
+    wx.stopPullDownRefresh()
   },
 
   loadStats() {
@@ -98,11 +106,36 @@ Page({
     const todayKey = `analysis_${today}`
     const currentCount = wx.getStorageSync(todayKey) || 0
     wx.setStorageSync(todayKey, currentCount + 1)
+    
+    // 更新总分析次数
+    const totalAnalysis = wx.getStorageSync('totalAnalysis') || 0
+    wx.setStorageSync('totalAnalysis', totalAnalysis + 1)
+  },
+
+  // 检查AI服务状态
+  async checkAIService() {
+    try {
+      const status = await checkHealth()
+      this.setData({
+        aiServiceStatus: status.healthy ? 'healthy' : 'unhealthy'
+      })
+    } catch (error) {
+      console.error('检查AI服务状态失败:', error)
+      this.setData({
+        aiServiceStatus: 'unhealthy'
+      })
+    }
   },
 
   // 拍照上传
   async takePhoto() {
     try {
+      // 检查相机权限
+      const authResult = await this.checkCameraAuth()
+      if (!authResult) {
+        return
+      }
+
       showLoading('准备拍照...')
       const imagePath = await uploadImage('camera')
       hideLoading()
@@ -128,21 +161,69 @@ Page({
     }
   },
 
+  // 检查相机权限
+  checkCameraAuth() {
+    return new Promise((resolve) => {
+      wx.getSetting({
+        success: (res) => {
+          if (res.authSetting['scope.camera'] === false) {
+            // 用户拒绝了相机权限，引导用户去设置
+            wx.showModal({
+              title: '需要相机权限',
+              content: '请在设置中开启相机权限，以便拍照识别佛珠',
+              confirmText: '去设置',
+              success: (modalRes) => {
+                if (modalRes.confirm) {
+                  wx.openSetting({
+                    success: (settingRes) => {
+                      resolve(settingRes.authSetting['scope.camera'])
+                    },
+                    fail: () => resolve(false)
+                  })
+                } else {
+                  resolve(false)
+                }
+              }
+            })
+          } else {
+            resolve(true)
+          }
+        },
+        fail: () => resolve(true)
+      })
+    })
+  },
+
   // 分析图片
   async analyzeImage(imagePath) {
     try {
-      showLoading('AI正在分析中...')
+      showLoading('AI正在分析中...', true)
       
-      // 压缩图片
+      // 压缩图片以提高上传速度
       const compressedPath = await compressImage(imagePath, 80)
       
-      // 调用分析API
+      // 调用AI分析API
       const result = await analyzeBeads(compressedPath)
       
       hideLoading()
       
+      // 保存分析历史
+      saveAnalysisHistory(compressedPath, result)
+      
       // 更新统计
       this.updateTodayAnalysis()
+      this.loadStats()
+      
+      // 显示成功提示
+      if (result.aiService !== 'fallback') {
+        showSuccess('AI分析完成')
+      } else {
+        wx.showToast({
+          title: '使用离线模式分析',
+          icon: 'none',
+          duration: 2000
+        })
+      }
       
       // 跳转到结果页面
       wx.navigateTo({
@@ -152,10 +233,22 @@ Page({
     } catch (error) {
       hideLoading()
       console.error('分析失败:', error)
-      showError('分析失败，请重试')
+      
+      // 根据错误类型显示不同的提示
+      let errorMsg = '分析失败，请重试'
+      if (error.message.includes('网络')) {
+        errorMsg = '网络连接失败，请检查网络后重试'
+      } else if (error.message.includes('图片')) {
+        errorMsg = '图片格式不支持，请选择其他图片'
+      } else if (error.message.includes('超时')) {
+        errorMsg = 'AI服务响应超时，请稍后重试'
+      }
+      
+      showError(errorMsg)
     }
   },
 
+  // 查看商品详情
   viewDetail(e) {
     const id = e.currentTarget.dataset.id
     wx.showToast({
@@ -164,6 +257,7 @@ Page({
     })
   },
 
+  // 查看知识详情
   viewKnowledge(e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
@@ -171,10 +265,42 @@ Page({
     })
   },
 
+  // 查看分析历史
+  viewHistory() {
+    wx.navigateTo({
+      url: '/pages/analysis-history/analysis-history'
+    })
+  },
+
+  // 查看AI服务状态
+  viewAIStatus() {
+    const statusText = {
+      'healthy': 'AI服务正常运行',
+      'unhealthy': 'AI服务暂时不可用，将使用离线模式',
+      'unknown': '正在检查AI服务状态...'
+    }
+    
+    wx.showModal({
+      title: 'AI服务状态',
+      content: statusText[this.data.aiServiceStatus],
+      showCancel: false,
+      confirmText: '知道了'
+    })
+  },
+
+  // 分享功能
   onShareAppMessage() {
     return {
       title: '佛珠鉴赏 - AI智能鉴赏佛珠',
       path: '/pages/index/index',
+      imageUrl: '/images/share-cover.jpg'
+    }
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    return {
+      title: '佛珠鉴赏 - AI智能鉴赏佛珠',
       imageUrl: '/images/share-cover.jpg'
     }
   }

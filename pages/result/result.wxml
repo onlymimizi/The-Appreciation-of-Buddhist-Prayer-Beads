@@ -1,93 +1,149 @@
-<!--result.wxml-->
+<!--pages/result/result.wxml - 更新版本，支持新的AI分析结果-->
 <view class="container">
-  <!-- 分析结果卡片 -->
-  <view class="result-card card">
-    <!-- 佛珠图片 -->
-    <view class="image-section">
-      <image class="result-image" src="{{imageUrl}}" mode="aspectFill" bindtap="previewImage"></image>
-      <view class="image-overlay">
-        <view class="analysis-status">
-          <text class="status-icon">✓</text>
-          <text class="status-text">AI鉴赏完成</text>
+  <!-- 图片展示区域 -->
+  <view class="image-section">
+    <image 
+      class="result-image" 
+      src="{{imageUrl}}" 
+      mode="aspectFit"
+      bindtap="previewImage"
+      lazy-load="{{true}}"
+    />
+    <view class="image-actions">
+      <button class="action-btn" bindtap="saveToAlbum">
+        <text class="iconfont icon-download"></text>
+        保存图片
+      </button>
+      <button class="action-btn" bindtap="reAnalyze">
+        <text class="iconfont icon-refresh"></text>
+        重新分析
+      </button>
+    </view>
+  </view>
+
+  <!-- 分析结果区域 -->
+  <view class="result-section" wx:if="{{result}}">
+    <!-- 基本信息 -->
+    <view class="info-card">
+      <view class="card-header">
+        <text class="card-title">鉴赏结果</text>
+        <view class="confidence-badge" bindtap="showConfidenceInfo">
+          <text class="confidence-text">置信度 {{result.confidence}}%</text>
+        </view>
+      </view>
+      
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">材质</text>
+          <text class="info-value material">{{result.material}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">工艺</text>
+          <text class="info-value">{{result.craft}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">估价</text>
+          <text class="info-value price">{{result.estimate}}</text>
         </view>
       </view>
     </view>
 
-    <!-- 鉴赏结果 -->
-    <view class="analysis-result">
-      <view class="result-title">鉴赏结果</view>
-      
-      <view class="result-item">
-        <view class="result-label">材质</view>
-        <view class="result-value">{{result.material}}</view>
-      </view>
-      
-      <view class="result-item">
-        <view class="result-label">工艺</view>
-        <view class="result-value">{{result.craft}}</view>
-      </view>
-      
-      <view class="result-item">
-        <view class="result-label">估值范围</view>
-        <view class="result-value price">{{result.estimate}}</view>
-      </view>
-      
-      <view class="result-item comment">
-        <view class="result-label">专家点评</view>
-        <view class="result-comment">{{result.comment}}</view>
+    <!-- 特征标签 -->
+    <view class="features-card" wx:if="{{result.features && result.features.length > 0}}">
+      <view class="card-title">特征标签</view>
+      <view class="features-list">
+        <text 
+          class="feature-tag" 
+          wx:for="{{result.features}}" 
+          wx:key="index"
+        >
+          {{item}}
+        </text>
       </view>
     </view>
 
-    <!-- 置信度 -->
-    <view class="confidence-section">
-      <view class="confidence-title">识别置信度</view>
-      <view class="confidence-bar">
-        <view class="confidence-fill" style="width: {{result.confidence}}%"></view>
+    <!-- 详细评价 -->
+    <view class="comment-card">
+      <view class="card-header">
+        <text class="card-title">专业评价</text>
+        <text 
+          class="toggle-btn" 
+          bindtap="toggleFullComment"
+        >
+          {{showFullComment ? '收起' : '展开'}}
+        </text>
       </view>
-      <view class="confidence-text">{{result.confidence}}%</view>
+      <view class="comment-content">
+        <text class="comment-text {{showFullComment ? 'full' : 'ellipsis'}}">
+          {{result.comment}}
+        </text>
+      </view>
+    </view>
+
+    <!-- 材质描述 -->
+    <view class="description-card" wx:if="{{result.description}}">
+      <view class="card-title">材质介绍</view>
+      <text class="description-text">{{result.description}}</text>
+    </view>
+
+    <!-- 文化背景 -->
+    <view class="cultural-card" wx:if="{{result.culturalBackground}}">
+      <view class="card-header">
+        <text class="card-title">文化背景</text>
+        <text 
+          class="toggle-btn" 
+          bindtap="toggleCulturalBackground"
+        >
+          {{showCulturalBackground ? '收起' : '展开'}}
+        </text>
+      </view>
+      <view class="cultural-content" wx:if="{{showCulturalBackground}}">
+        <text class="cultural-text">{{result.culturalBackground}}</text>
+      </view>
+    </view>
+
+    <!-- 保养建议 -->
+    <view class="care-card" wx:if="{{result.careInstructions}}">
+      <view class="card-header">
+        <text class="card-title">保养建议</text>
+        <text 
+          class="toggle-btn" 
+          bindtap="toggleCareInstructions"
+        >
+          {{showCareInstructions ? '收起' : '展开'}}
+        </text>
+      </view>
+      <view class="care-content" wx:if="{{showCareInstructions}}">
+        <text class="care-text">{{result.careInstructions}}</text>
+      </view>
+    </view>
+
+    <!-- AI服务信息 -->
+    <view class="ai-info-card">
+      <view class="ai-info-content" bindtap="showAIServiceInfo">
+        <text class="ai-info-text">
+          分析时间：{{result.analysisTime ? result.analysisTime.split('T')[0] : ''}}
+        </text>
+        <text class="ai-service-text">
+          AI服务：{{result.aiService === 'openai' ? 'OpenAI' : result.aiService === 'gemini' ? 'Gemini' : '离线模式'}}
+        </text>
+      </view>
     </view>
   </view>
 
-  <!-- 广告位 -->
-  <view class="ad-container">
-    <!-- Banner广告位 -->
-    <!-- <ad unit-id="adunit-banner-xxxxxxxx" ad-intervals="30"></ad> -->
-  </view>
-
-  <!-- 操作按钮 -->
-  <view class="action-buttons">
-    <button class="action-btn secondary" bindtap="saveResult">
-      <text class="btn-icon">💾</text>
-      <text class="btn-text">保存结果</text>
+  <!-- 操作按钮区域 -->
+  <view class="action-section">
+    <button class="primary-btn" bindtap="addToFavorites">
+      <text class="iconfont icon-heart"></text>
+      添加收藏
     </button>
-    
-    <button class="action-btn primary" bindtap="shareResult" open-type="share">
-      <text class="btn-icon">📤</text>
-      <text class="btn-text">分享结果</text>
+    <button class="secondary-btn" bindtap="shareResult">
+      <text class="iconfont icon-share"></text>
+      分享结果
     </button>
-  </view>
-
-  <!-- 相关推荐 -->
-  <view class="recommend-section">
-    <view class="section-title">相关推荐</view>
-    <view class="recommend-list">
-      <block wx:for="{{recommendList}}" wx:key="id">
-        <view class="recommend-item" bindtap="viewRecommend" data-id="{{item.id}}">
-          <image class="recommend-image" src="{{item.image}}" mode="aspectFill"></image>
-          <view class="recommend-info">
-            <view class="recommend-name">{{item.name}}</view>
-            <view class="recommend-desc">{{item.desc}}</view>
-          </view>
-        </view>
-      </block>
-    </view>
-  </view>
-
-  <!-- 重新分析按钮 -->
-  <view class="reanalyze-section">
-    <button class="reanalyze-btn" bindtap="reanalyze">
-      <text class="btn-icon">🔄</text>
-      <text class="btn-text">重新分析</text>
+    <button class="secondary-btn" bindtap="viewSimilarProducts">
+      <text class="iconfont icon-search"></text>
+      查看相似
     </button>
   </view>
 </view>
