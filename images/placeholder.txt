@@ -1,0 +1,49 @@
+# 图片资源说明
+
+请在此目录下放置以下图片资源：
+
+## TabBar图标 (建议尺寸: 81x81px)
+- home.png - 首页图标
+- home-active.png - 首页选中图标
+- baike.png - 百科图标
+- baike-active.png - 百科选中图标
+- shequ.png - 社区图标
+- shequ-active.png - 社区选中图标
+- mine.png - 我的图标
+- mine-active.png - 我的选中图标
+
+## 轮播图 (建议尺寸: 750x400px)
+- swiper1.jpg - 轮播图1
+- swiper2.jpg - 轮播图2
+- swiper3.jpg - 轮播图3
+
+## 推荐商品图 (建议尺寸: 300x300px)
+- recommend1.jpg - 推荐商品1
+- recommend2.jpg - 推荐商品2
+- recommend3.jpg - 推荐商品3
+- recommend4.jpg - 推荐商品4
+
+## 用户头像 (建议尺寸: 200x200px)
+- avatar1.jpg - 用户头像1
+- avatar2.jpg - 用户头像2
+- avatar3.jpg - 用户头像3
+- avatar4.jpg - 用户头像4
+- avatar5.jpg - 用户头像5
+- default-avatar.png - 默认头像
+
+## 帖子图片 (建议尺寸: 400x400px)
+- post1-1.jpg, post1-2.jpg, post1-3.jpg
+- post2-1.jpg, post2-2.jpg
+- post3-1.jpg
+- post4-1.jpg, post4-2.jpg, post4-3.jpg, post4-4.jpg
+- post5-1.jpg, post5-2.jpg
+
+## 指南图片 (建议尺寸: 300x200px)
+- guide1.jpg - 指南图1
+- guide2.jpg - 指南图2
+- guide3.jpg - 指南图3
+
+## 分享封面 (建议尺寸: 500x400px)
+- share-cover.jpg - 分享封面图
+
+注意：实际使用时请替换为真实的佛珠相关图片资源。

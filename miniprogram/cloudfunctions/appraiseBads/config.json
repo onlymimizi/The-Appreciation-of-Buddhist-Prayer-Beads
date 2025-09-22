@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "openapi": [
+      "storage.uploadFile",
+      "storage.downloadFile",
+      "storage.deleteFile"
+    ]
+  },
+  "environment": {
+    "OPENROUTER_API_KEY": "",
+    "OPENROUTER_BASE_URL": "https://openrouter.ai/api/v1/chat/completions",
+    "MODEL_NAME": "qwen/qwen-vl-plus"
+  }
+}

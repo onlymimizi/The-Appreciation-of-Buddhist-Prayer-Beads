@@ -1,0 +1,146 @@
+/**baike.wxss**/
+.container {
+  padding: 0;
+  background: #f8f8f8;
+}
+
+/* 搜索栏 */
+.search-container {
+  padding: 20rpx;
+  background: #ffffff;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+
+.search-box {
+  position: relative;
+  background: #f0f0f0;
+  border-radius: 20rpx;
+  padding: 20rpx 60rpx 20rpx 30rpx;
+}
+
+.search-input {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.search-icon {
+  position: absolute;
+  right: 30rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* 分类导航 */
+.category-nav {
+  background: #ffffff;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+
+.category-scroll {
+  white-space: nowrap;
+}
+
+.category-list {
+  display: flex;
+  padding: 0 20rpx;
+}
+
+.category-item {
+  flex-shrink: 0;
+  padding: 20rpx 30rpx;
+  font-size: 28rpx;
+  color: #666666;
+  border-radius: 20rpx;
+  margin-right: 20rpx;
+  transition: all 0.3s;
+}
+
+.category-item.active {
+  background: #007AFF;
+  color: #ffffff;
+}
+
+/* 内容列表 */
+.content-list {
+  padding: 20rpx;
+}
+
+.content-item {
+  margin-bottom: 20rpx;
+  transition: all 0.3s;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.content-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.content-arrow {
+  font-size: 28rpx;
+  color: #999999;
+  transform: rotate(0deg);
+  transition: transform 0.3s;
+}
+
+.content-item[data-expanded="true"] .content-arrow {
+  transform: rotate(90deg);
+}
+
+.content-desc {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.5;
+}
+
+/* 详细内容 */
+.content-detail {
+  margin-top: 30rpx;
+  padding-top: 30rpx;
+  border-top: 1rpx solid #e5e5e5;
+}
+
+.detail-section {
+  margin-bottom: 30rpx;
+}
+
+.detail-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 15rpx;
+}
+
+.detail-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.6;
+}
+
+.feature-list, .tips-list {
+  margin-top: 15rpx;
+}
+
+.feature-item, .tip-item {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 10rpx;
+  padding-left: 20rpx;
+}
+
+.tip-item {
+  background: #f8f9fa;
+  padding: 15rpx 20rpx;
+  border-radius: 8rpx;
+  border-left: 4rpx solid #007AFF;
+}

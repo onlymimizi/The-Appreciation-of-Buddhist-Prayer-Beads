@@ -1,0 +1,59 @@
+<!--baike.wxml-->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-container">
+    <view class="search-box">
+      <input class="search-input" placeholder="搜索佛珠知识" bindinput="onSearchInput" value="{{searchValue}}" />
+      <view class="search-icon">🔍</view>
+    </view>
+  </view>
+
+  <!-- 分类导航 -->
+  <view class="category-nav">
+    <scroll-view class="category-scroll" scroll-x="true">
+      <view class="category-list">
+        <block wx:for="{{categoryList}}" wx:key="id">
+          <view class="category-item {{currentCategory === item.id ? 'active' : ''}}" 
+                bindtap="switchCategory" data-id="{{item.id}}">
+            {{item.name}}
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 内容列表 -->
+  <view class="content-list">
+    <block wx:for="{{currentList}}" wx:key="id">
+      <view class="content-item card" bindtap="viewDetail" data-item="{{item}}">
+        <view class="content-header">
+          <view class="content-title">{{item.title}}</view>
+          <view class="content-arrow">></view>
+        </view>
+        <view class="content-desc">{{item.desc}}</view>
+        <view wx:if="{{item.expanded}}" class="content-detail">
+          <view class="detail-section">
+            <view class="detail-title">详细介绍</view>
+            <view class="detail-text">{{item.detail}}</view>
+          </view>
+          <view wx:if="{{item.features}}" class="detail-section">
+            <view class="detail-title">主要特征</view>
+            <view class="feature-list">
+              <block wx:for="{{item.features}}" wx:key="*this" wx:for-item="feature">
+                <view class="feature-item">• {{feature}}</view>
+              </block>
+            </view>
+          </view>
+          <view wx:if="{{item.tips}}" class="detail-section">
+            <view class="detail-title">鉴别要点</view>
+            <view class="tips-list">
+              <block wx:for="{{item.tips}}" wx:key="*this" wx:for-item="tip">
+                <view class="tip-item">{{tip}}</view>
+              </block>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

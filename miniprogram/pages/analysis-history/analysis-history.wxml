@@ -1,0 +1,33 @@
+<!--analysis-history.wxml-->
+<view class="container">
+  <view wx:if="{{historyList.length === 0}}" class="empty-state">
+    <view class="empty-icon">📝</view>
+    <view class="empty-text">暂无鉴赏记录</view>
+    <view class="empty-desc">快去首页上传佛珠照片进行AI鉴赏吧</view>
+    <button class="goto-home-btn" bindtap="gotoHome">去鉴赏</button>
+  </view>
+
+  <view wx:else class="history-list">
+    <block wx:for="{{historyList}}" wx:key="id">
+      <view class="history-item card" bindtap="viewResult" data-item="{{item}}">
+        <view class="item-header">
+          <image class="item-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+          <view class="item-info">
+            <view class="item-material">{{item.result.material}}</view>
+            <view class="item-estimate">{{item.result.estimate}}</view>
+            <view class="item-date">{{item.date}}</view>
+          </view>
+          <view class="item-actions">
+            <view class="action-btn" bindtap="shareItem" data-item="{{item}}" catchtap="true">
+              <text class="action-icon">📤</text>
+            </view>
+            <view class="action-btn" bindtap="deleteItem" data-id="{{item.id}}" catchtap="true">
+              <text class="action-icon">🗑️</text>
+            </view>
+          </view>
+        </view>
+        <view class="item-comment">{{item.result.comment}}</view>
+      </view>
+    </block>
+  </view>
+</view>

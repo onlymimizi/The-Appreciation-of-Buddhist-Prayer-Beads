@@ -1,0 +1,22 @@
+{
+  "name": "appraiseBads",
+  "version": "1.0.0",
+  "description": "佛珠鉴赏云函数 - 调用OpenRouter的Qwen-VL-Plus模型进行佛珠图片分析",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "佛珠",
+    "鉴赏",
+    "OpenRouter",
+    "Qwen-VL-Plus",
+    "云函数",
+    "微信小程序"
+  ],
+  "author": "佛珠鉴赏助手",
+  "license": "MIT"
+}

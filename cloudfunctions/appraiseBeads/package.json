@@ -1,0 +1,23 @@
+{
+  "name": "appraiseBeads",
+  "version": "1.0.0",
+  "description": "佛珠鉴赏云函数 - 调用AI服务进行佛珠图片分析",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3",
+    "axios": "^1.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "cloud-function",
+    "ai",
+    "beads",
+    "analysis"
+  ],
+  "author": "佛珠鉴赏助手团队",
+  "license": "MIT"
+}

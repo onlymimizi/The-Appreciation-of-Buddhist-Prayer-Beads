@@ -1,0 +1,149 @@
+<!--pages/result/result.wxml - 更新版本，支持新的AI分析结果-->
+<view class="container">
+  <!-- 图片展示区域 -->
+  <view class="image-section">
+    <image 
+      class="result-image" 
+      src="{{imageUrl}}" 
+      mode="aspectFit"
+      bindtap="previewImage"
+      lazy-load="{{true}}"
+    />
+    <view class="image-actions">
+      <button class="action-btn" bindtap="saveToAlbum">
+        <text class="iconfont icon-download"></text>
+        保存图片
+      </button>
+      <button class="action-btn" bindtap="reAnalyze">
+        <text class="iconfont icon-refresh"></text>
+        重新分析
+      </button>
+    </view>
+  </view>
+
+  <!-- 分析结果区域 -->
+  <view class="result-section" wx:if="{{result}}">
+    <!-- 基本信息 -->
+    <view class="info-card">
+      <view class="card-header">
+        <text class="card-title">鉴赏结果</text>
+        <view class="confidence-badge" bindtap="showConfidenceInfo">
+          <text class="confidence-text">置信度 {{result.confidence}}%</text>
+        </view>
+      </view>
+      
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">材质</text>
+          <text class="info-value material">{{result.material}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">工艺</text>
+          <text class="info-value">{{result.craft}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">估价</text>
+          <text class="info-value price">{{result.estimate}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 特征标签 -->
+    <view class="features-card" wx:if="{{result.features && result.features.length > 0}}">
+      <view class="card-title">特征标签</view>
+      <view class="features-list">
+        <text 
+          class="feature-tag" 
+          wx:for="{{result.features}}" 
+          wx:key="index"
+        >
+          {{item}}
+        </text>
+      </view>
+    </view>
+
+    <!-- 详细评价 -->
+    <view class="comment-card">
+      <view class="card-header">
+        <text class="card-title">专业评价</text>
+        <text 
+          class="toggle-btn" 
+          bindtap="toggleFullComment"
+        >
+          {{showFullComment ? '收起' : '展开'}}
+        </text>
+      </view>
+      <view class="comment-content">
+        <text class="comment-text {{showFullComment ? 'full' : 'ellipsis'}}">
+          {{result.comment}}
+        </text>
+      </view>
+    </view>
+
+    <!-- 材质描述 -->
+    <view class="description-card" wx:if="{{result.description}}">
+      <view class="card-title">材质介绍</view>
+      <text class="description-text">{{result.description}}</text>
+    </view>
+
+    <!-- 文化背景 -->
+    <view class="cultural-card" wx:if="{{result.culturalBackground}}">
+      <view class="card-header">
+        <text class="card-title">文化背景</text>
+        <text 
+          class="toggle-btn" 
+          bindtap="toggleCulturalBackground"
+        >
+          {{showCulturalBackground ? '收起' : '展开'}}
+        </text>
+      </view>
+      <view class="cultural-content" wx:if="{{showCulturalBackground}}">
+        <text class="cultural-text">{{result.culturalBackground}}</text>
+      </view>
+    </view>
+
+    <!-- 保养建议 -->
+    <view class="care-card" wx:if="{{result.careInstructions}}">
+      <view class="card-header">
+        <text class="card-title">保养建议</text>
+        <text 
+          class="toggle-btn" 
+          bindtap="toggleCareInstructions"
+        >
+          {{showCareInstructions ? '收起' : '展开'}}
+        </text>
+      </view>
+      <view class="care-content" wx:if="{{showCareInstructions}}">
+        <text class="care-text">{{result.careInstructions}}</text>
+      </view>
+    </view>
+
+    <!-- AI服务信息 -->
+    <view class="ai-info-card">
+      <view class="ai-info-content" bindtap="showAIServiceInfo">
+        <text class="ai-info-text">
+          分析时间：{{result.analysisTime ? result.analysisTime.split('T')[0] : ''}}
+        </text>
+        <text class="ai-service-text">
+          AI服务：{{result.aiService === 'openai' ? 'OpenAI' : result.aiService === 'gemini' ? 'Gemini' : '离线模式'}}
+        </text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮区域 -->
+  <view class="action-section">
+    <button class="primary-btn" bindtap="addToFavorites">
+      <text class="iconfont icon-heart"></text>
+      添加收藏
+    </button>
+    <button class="secondary-btn" bindtap="shareResult">
+      <text class="iconfont icon-share"></text>
+      分享结果
+    </button>
+    <button class="secondary-btn" bindtap="viewSimilarProducts">
+      <text class="iconfont icon-search"></text>
+      查看相似
+    </button>
+  </view>
+</view>
